@@ -5,6 +5,8 @@ Created on Mon Nov 18 16:51:06 2024
 @author: ASHNER_NOVILLA
 """
 
+import os
+
 import streamlit as st
 from time import sleep
 import os
@@ -23,7 +25,8 @@ st.caption("Author: Ashner Novilla :sunglasses:")
 # Function to access Groq API
 def groq_access(content):
     try:
-        client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        # client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        client = Groq(api_key = os.getenv('GROQ_API_KEY'))
         chat_completion = client.chat.completions.create(
             messages=[
                 {
