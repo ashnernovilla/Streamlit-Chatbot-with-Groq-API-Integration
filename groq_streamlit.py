@@ -5,28 +5,26 @@ Created on Mon Nov 18 16:51:06 2024
 @author: ASHNER_NOVILLA
 """
 
-import os
-
 import streamlit as st
 from time import sleep
-import os
-#from dotenv import load_dotenv
 from groq import Groq
 
-# Load environment variables
-#load_dotenv()
-
-
+# Streamlit header
 st.header("**Groq is Fast AI Inference Deployment** 🤖")
-st.caption("This is a LLM PoC using Groq Fast AI Inference.")
+st.caption("This is an LLM PoC using Groq Fast AI Inference.")
 st.caption("Author: Ashner Novilla :sunglasses:")
 
 
 # Function to access Groq API
 def groq_access(content):
     try:
-        # client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-        client = Groq(api_key = os.getenv('GROQ_API_KEY'))
+        # Retrieve the API key from Streamlit Secrets
+        api_key = st.secrets["GROQ_API_KEY"]
+
+        # Initialize the Groq client with the API key
+        client = Groq(api_key=api_key)
+
+        # Make a request to the Groq API
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -36,11 +34,13 @@ def groq_access(content):
             ],
             model="llama3-8b-8192",
         )
+        # Return the bot's response
         return chat_completion.choices[0].message.content
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Function to stream response
+
+# Function to stream response dynamically
 def stream_data(response_chat):
     """
     Stream response one word at a time.
@@ -48,6 +48,7 @@ def stream_data(response_chat):
     for word in response_chat.split(" "):
         yield word + " "
         sleep(0.0002)
+
 
 # Initialize conversation history
 if "history" not in st.session_state:
