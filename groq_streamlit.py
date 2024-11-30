@@ -10,7 +10,7 @@ from time import sleep
 from groq import Groq
 
 # Streamlit header
-st.header("**Groq is Fast AI Inference Deployment** 🤖")
+st.header("**Groq Fast AI Inference Deployment** 🤖")
 st.caption("This is an LLM PoC using Groq Fast AI Inference.")
 st.caption("Author: Ashner Novilla :sunglasses:")
 
